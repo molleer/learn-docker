@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  # Existing image from Docker Hub
+  web-app:
+    image: nginx:latest # Use the latest Nginx image from Docker Hub
+    ports:
+      - "8080:80" # Map host port 8080 to container port 80
+    networks:
+      - my-network # Connect to the custom bridge network named my-network
+    volumes:
+      - web-data:/usr/share/nginx/html # Mount a volume for web data
+
+  # Build from a custom Dockerfile
+  custom-app:
+    build:
+      context: ./ # Build context is the custom-app directory
+      dockerfile: Dockerfile # Use the specified Dockerfile
+    ports:
+      - "5000:5000" # Map host port 5000 to container port 5000
+    networks:
+      - my-network # Connect to the same custom bridge network
+    volumes:
+      - ./custom-app/data:/app/data # Mount a volume for application data
+
+  # Database service using environment variables
+  database:
+    image: postgres:latest # Use the latest PostgreSQL image from Docker Hub
+    environment:
+      POSTGRES_DB: mydatabase # Set the PostgreSQL database name
+      POSTGRES_USER: myuser # Set the PostgreSQL username
+      POSTGRES_PASSWORD: mypassword # Set the PostgreSQL password
+    networks:
+      - my-network # Connect to the same custom bridge network
+    volumes:
+      - db-data:/var/lib/postgresql/data # Mount a volume for database data
+
+networks:
+  my-network:
+    driver: bridge # Use the bridge network driver for custom network
+
+volumes:
+  web-data: # Named volume for web-app data
+  db-data: # Named volume for database data
