@@ -60,12 +60,16 @@ You may also look at the [List of Usefull Docker commands](./docker-commands.md)
    - Task: Use Docker Compose to define and run a multi-container application.
    - Compose file (`docker-compose.yml`):
      ```yaml
-     version: '3'
+     version: "3"
      services:
        web:
          image: nginx
+         ports:
+           - "80:80"
        db:
          image: postgres
+         environment:
+           POSTGRES_PASSWORD: password
      ```
    - Commands:
      ```bash
