@@ -21,12 +21,13 @@ You may also look at the [List of Usefull Docker commands](./docker-commands.md)
 
 3. **Custom Docker Image:**
    - Task: Create a Dockerfile for a custom image that prints a personalized message.
-   - Commands:
-     ```bash
-     # Dockerfile
+   - `Dockerfile` content
+     ```Dockerfile
      FROM ubuntu:latest
      CMD echo "Hello Docker World!"
-
+     ```
+   - Commands:
+     ```bash
      # Build and run
      docker build -t custom-hello .
      docker run custom-hello
