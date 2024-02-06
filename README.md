@@ -43,6 +43,18 @@ You may also look at the [List of Usefull Docker commands](./docker-commands.md)
      # Run a container with the volume mounted
      docker run -d -v mydata:/app/data --name data-container nginx
      ```
+   - If the volume was mounted, the data within should persist after the docker container has been deleted. To check this, you can run the following commands:
+     ```bash
+     # Create a file in data-container
+     docker exec -it data-container touch /app/data/data.txt
+     # Stop and delete data-container
+     docker stop data-container
+     docker rm data-container
+     # Start a new container
+     docker run -d -v mydata:/app/data --name data-container2 nginx
+     # Check if file exist
+     docker exec -it data-container2 cat /app/data/data.txt # Should return no error
+     ```
 
 5. **Docker Compose for Multi-Container Application:**
    - Task: Use Docker Compose to define and run a multi-container application.
