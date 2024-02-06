@@ -17,7 +17,7 @@ You may also look at the [List of Usefull Docker commands](./docker-commands.md)
      ```bash
      docker run -d -p 80:80 --name my-web-server nginx
      ```
-   - Access the web server in your browser at `http://localhost`.
+   - Access the web server in your browser at http://localhost.
 
 3. **Custom Docker Image:**
    - Task: Create a Dockerfile for a custom image that prints a personalized message.
@@ -69,7 +69,15 @@ You may also look at the [List of Usefull Docker commands](./docker-commands.md)
      ```
    - Commands:
      ```bash
-     docker-compose up -d
+     docker compose up -d
+     ```
+   - Access the web server via your browser at http://localhost and enter the posgres interactive terminal with
+     ```bash
+     docker compose exec -it db psql -U postgres 
+     ```
+   - Stop all containers with
+     ```bash
+     docker compose down
      ```
 
 6. **Network Isolation:**
@@ -130,7 +138,7 @@ You may also look at the [List of Usefull Docker commands](./docker-commands.md)
      ```
    - Commands:
      ```bash
-     docker-compose up -d
+     docker compose up -d
      ```
 
 10. **Docker Swarm for Orchestration:**
