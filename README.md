@@ -1,8 +1,8 @@
 # Learning Docker
 
-Here is a list of tasks you can perform, from basic to advanced, you can perform in docker in order to learn how to use docker and how it works.
+Here is a list of tasks, from basic to advanced, you can perform in docker in order to learn how to use docker and how it works. If you have not installed docker, please follow the [Install Docker Guide](./install-docker.md) or the [Official Docs](https://docs.docker.com/engine/install/).
 
-You may also look in the [Dockerfile](./Dockerfile) and [docker-compose.yml](./docker-compose.yml) file to see what settings you can use when building a docker image or starting a multiple docker containers using docker-compose.
+You may also look at the [List of Usefull Docker commands](./docker-commands.md), [Dockerfile](./Dockerfile) or [docker-compose.yml](./docker-compose.yml) files to see what settings you can use when building a docker image or starting a multiple docker containers using docker-compose.
 
 1. **Hello World Container:**
    - Task: Run a simple "Hello World" container.
