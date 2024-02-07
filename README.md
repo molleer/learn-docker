@@ -95,29 +95,12 @@ You may also look at the [List of Usefull Docker commands](./docker-commands.md)
      docker run -d --network my-network --name container1 nginx
      docker run -d --network my-network --name container2 nginx
      ```
-
-7. **Container Communication:**
-   - Task: Run two containers that communicate with each other over a custom network.
-   - Commands:
+   - The two containers can now communicate privately, using their container names as host names. Test this by running:
      ```bash
-     # Create a custom bridge network
-     docker network create my-network
-
-     # Run containers within the custom network
-     docker run -d --network my-network --name server-container nginx
-     docker run -it --network my-network --name client-container busybox
+     docker exec -it container1 curl http://container2
      ```
 
-8. **Expose Specific Ports:**
-   - Task: Run a container with a specific port exposed and accessible from the host.
-   - Commands:
-     ```bash
-     # Run a container with a specific port exposed
-     docker run -d -p 8080:80 --name web-app nginx
-     ```
-   - Access the web server in your browser at `http://localhost:8080`.
-
-9. **Multiple Containers with Docker Compose:**
+7. **Multiple Containers with Docker Compose:**
    - Task: Define a Docker Compose file for a multi-container application with specific network configurations, volumes, and port mappings.
    - Compose file (`docker-compose.yml`):
      ```yaml
@@ -133,6 +116,8 @@ You may also look at the [List of Usefull Docker commands](./docker-commands.md)
            - web-data:/app/data
        db:
          image: postgres
+         environment:
+           POSTGRES_PASSWORD: password
          networks:
            - my-network
      networks:
@@ -145,7 +130,7 @@ You may also look at the [List of Usefull Docker commands](./docker-commands.md)
      docker compose up -d
      ```
 
-10. **Docker Swarm for Orchestration:**
+8. **Docker Swarm for Orchestration:**
     - Task: Set up a Docker Swarm cluster and deploy a multi-container application.
     - Commands:
       ```bash
