@@ -4,6 +4,8 @@ Here is a list of tasks, from basic to advanced, you can perform in docker in or
 
 You may also look at the [List of Usefull Docker commands](./docker-commands.md), [Dockerfile](./Dockerfile) or [docker-compose.yml](./docker-compose.yml) files to see what settings you can use when building a docker image or starting a multiple docker containers using docker-compose.
 
+## Demo tasks
+
 1. **Hello World Container:**
    - Task: Run a simple "Hello World" container.
    - Commands:
@@ -18,22 +20,12 @@ You may also look at the [List of Usefull Docker commands](./docker-commands.md)
      docker run -d -p 80:80 --name my-web-server nginx
      ```
    - Access the web server in your browser at http://localhost.
+   - Flags:
+     - `-d` detach, let the container run in the backgroud
+     - `-p <host port>:<container port>` port, links the `host port` to the `container port`
+     - `--name` name, sets container name
 
-3. **Custom Docker Image:**
-   - Task: Create a Dockerfile for a custom image that prints a personalized message.
-   - `Dockerfile` content
-     ```Dockerfile
-     FROM ubuntu:latest
-     CMD echo "Hello Docker World!"
-     ```
-   - Commands:
-     ```bash
-     # Build and run
-     docker build -t custom-hello .
-     docker run custom-hello
-     ```
-
-4. **Persistent Data with Volumes:**
+3. **Persistent Data with Volumes:**
    - Task: Mount a volume to a container to persist data.
    - Commands:
      ```bash
@@ -43,6 +35,8 @@ You may also look at the [List of Usefull Docker commands](./docker-commands.md)
      # Run a container with the volume mounted
      docker run -d -v mydata:/app/data --name data-container nginx
      ```
+   - Flags:
+     - `-v <volume_name>:<container path>` volume, mounts the volume to the specified `container path` 
    - If the volume was mounted, the data within should persist after the docker container has been deleted. To check this, you can run the following commands:
      ```bash
      # Create a file in data-container
@@ -54,6 +48,20 @@ You may also look at the [List of Usefull Docker commands](./docker-commands.md)
      docker run -d -v mydata:/app/data --name data-container2 nginx
      # Check if file exist
      docker exec -it data-container2 cat /app/data/data.txt # Should return no error
+     ```
+
+4. **Custom Docker Image:**
+   - Task: Create a Dockerfile for a custom image that prints a personalized message.
+   - `Dockerfile` content
+     ```Dockerfile
+     FROM ubuntu:latest
+     CMD echo "Hello Docker World!"
+     ```
+   - Commands:
+     ```bash
+     # Build and run
+     docker build -t custom-hello .
+     docker run custom-hello
      ```
 
 5. **Docker Compose for Multi-Container Application:**
@@ -84,8 +92,10 @@ You may also look at the [List of Usefull Docker commands](./docker-commands.md)
      docker compose down
      ```
 
-6. **Network Isolation:**
-   - Task: Create a custom bridge network and run containers within that network.
+## Individual tasks
+
+1. **Network Isolation:**
+   - Task: Start two containers with the command below, show that the containers can reach each other.
    - Commands:
      ```bash
      # Create a custom bridge network
@@ -95,54 +105,14 @@ You may also look at the [List of Usefull Docker commands](./docker-commands.md)
      docker run -d --network my-network --name container1 nginx
      docker run -d --network my-network --name container2 nginx
      ```
-   - The two containers can now communicate privately, using their container names as host names. Test this by running:
-     ```bash
-     docker exec -it container1 curl http://container2
-     ```
+   - Hint: 1. `docker exec` 2. If two containers are on the same network, their container names works as domain names. 
+     
+2. **Multiple Containers with Docker Compose:**
+   - Task: Do task 1 again, but start the containers using docker-compose.yml. The [docker-compose.yml](./docker-compose.yml) file could help you here.
 
-7. **Multiple Containers with Docker Compose:**
-   - Task: Define a Docker Compose file for a multi-container application with specific network configurations, volumes, and port mappings.
-   - Compose file (`docker-compose.yml`):
-     ```yaml
-     version: '3'
-     services:
-       web:
-         image: nginx
-         ports:
-           - "8080:80"
-         networks:
-           - my-network
-         volumes:
-           - web-data:/app/data
-       db:
-         image: postgres
-         environment:
-           POSTGRES_PASSWORD: password
-         networks:
-           - my-network
-     networks:
-       my-network:
-     volumes:
-       web-data:
-     ```
-   - Commands:
-     ```bash
-     docker compose up -d
-     ```
-
-8. **Docker Swarm for Orchestration:**
+3. **Docker Swarm for Orchestration:**
     - Task: Set up a Docker Swarm cluster and deploy a multi-container application.
-    - Commands:
-      ```bash
-      # Initialize Swarm on manager node
-      docker swarm init
+    - Grab a friend and see if you connect their machine to the docker cluster.
 
-      # Join worker nodes to the Swarm (use output from previous command)
-      docker swarm join --token <token> <manager-ip>
-
-      # Deploy a stack (docker-compose.yml should be prepared)
-      docker stack deploy -c docker-compose.yml my-app
-      ```
-    - Ensure the `docker-compose.yml` file is prepared for a Swarm environment.
-
-These assignments cover a range of Docker features and concepts, helping you progress from basic container usage to more advanced scenarios involving multiple containers, networking, volumes, and orchestration.
+4. **Dockerise Node.Js demo application**
+    - Task: Create a custom docker image which runns the [Demo Application](./demo) when started.
